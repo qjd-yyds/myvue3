@@ -1,0 +1,84 @@
+$bodercolor: rgba(23, 171, 248, 1);
+.home {
+  width: 100%;
+  height: 100%;
+  background: url("./img/bg.png");
+  background-size: 100% 100%;
+  .ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-wrap: wrap;
+    width: 1000px;
+    height: 400px;
+    .li {
+      margin-right: 40px;
+      cursor: pointer;
+      background: linear-gradient(0deg, #cacfe2, rgba(23, 171, 248, 0.4));
+      box-shadow: 0px 10px 21px 0px rgba(4, 14, 45, 0.81);
+      border-radius: 7px;
+      width: 200px;
+      height: 150px;
+      padding: 10px 12px;
+      .innter-box {
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(23, 171, 248, 0.4);
+        position: relative;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 14px;
+        .image {
+          width: 60px;
+        }
+        .name {
+          background-color: rgba(25, 68, 224, 1);
+          border-radius: 10px;
+          color: #fff;
+          padding: 5px 10px;
+          min-width: 120px;
+        }
+        span {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          border: 2px solid transparent;
+        }
+        .lt {
+          border-left-color: $bodercolor;
+          border-top-color: $bodercolor;
+          left: -1px;
+          top: -1px;
+        }
+        .lb {
+          border-left-color: $bodercolor;
+          bottom: -1px;
+          left: -1px;
+          border-bottom-color: $bodercolor;
+        }
+        .rt {
+          border-top-color: $bodercolor;
+          border-right-color: $bodercolor;
+          top: -1px;
+          right: -1px;
+        }
+        .rb {
+          border-right-color: $bodercolor;
+          border-bottom-color: $bodercolor;
+          bottom: -1px;
+          right: -1px;
+        }
+      }
+    }
+  }
+}
+.myImage {
+  width: 100%;
+  height: 300px;
+  margin-top: 10px;
+}
