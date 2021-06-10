@@ -1,11 +1,11 @@
-import { ref, onBeforeUnmount } from 'vue';
+import { ref, onBeforeUnmount } from "vue";
 
 export const useStart = (props: any) => {
   const localStartVal = ref(props.startVal);
   const startTime = ref(null);
   const localDuration = ref(props.duration);
   const paused = ref(false);
-  const rAF = ref(null);
+  const rAF = ref<number>(0);
   // 滚动入口函数
   const start = (count: any) => {
     // 开始数据付给本地数据
@@ -28,6 +28,6 @@ export const useStart = (props: any) => {
     startTime,
     localDuration,
     paused,
-    rAF
+    rAF,
   };
 };

@@ -1,0 +1,10 @@
+.view-container {
+  width: 100%;
+  padding: 20px 40px 24px;
+  display: flex;
+  .view {
+    &:not(:first-child) {
+      margin-left: 20px;
+    }
+  }
+}

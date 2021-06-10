@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import "./style.scss";
-// import RightMore from "./rightMore";
+import RightMore from "./rightMore";
 
 export default defineComponent({
   name: "TemBox",
@@ -26,24 +26,23 @@ export default defineComponent({
       type: Number,
     },
   },
-  setup(props) {
+  setup(props, ctx) {
     const boxStyle = {
       width: props.temWidth + "px",
       height: props.temHeight + "px",
     };
+    const slash = "//";
     return () => (
       <div class="tembox" style={boxStyle}>
         <div class="tembox-header">
           <div class="tembox-header-container">
             <span class="tembox-header-container-title">{props.temTitle}</span>
             <span class="tembox-header-container-right">
-              {/* {props.temRight ? <RightMore text={props.rightText} /> : <span>//</span>} */}
+              {props.temRight ? <RightMore text={props.rightText} /> : <span>{slash}</span>}
             </span>
           </div>
         </div>
-        <div class="tembox-container">
-          <slot></slot>
-        </div>
+        <div class="tembox-container">{ctx.slots.default && ctx.slots.default()}</div>
       </div>
     );
   },

@@ -1,4 +1,6 @@
+import NetworkConfig from "@/config/net.config";
 import axios from "axios";
+import { getToken } from "./auth";
 export enum METHODS {
   GET = "get",
   POST = "post",
@@ -18,25 +20,40 @@ export enum EContentType {
   json = "application/json; charset=utf-8",
   multipart = "multipart/form-data",
 }
-export interface RequestParams<T> {
+export interface RequestParams<T> extends ObjectBase {
+  /**
+   * 状态码
+   * @type { number }
+   */
   code: number;
+  /**
+   * 数据
+   * @type { T }
+   */
   data: T;
+  /**
+   * 用户令牌
+   * @type { string }
+   */
   token?: string;
+  /**
+   * 消息
+   * @type { any }
+   */
   msg: any;
-  [key: string]: any;
 }
 
 const instance = axios.create({
-  baseURL: "http://ieac.f3322.net:6004/td",
-  timeout: 20000,
+  baseURL: NetworkConfig.host,
+  timeout: NetworkConfig.timeout,
 });
 // 请求拦截
 instance.interceptors.request.use(
   (response) => {
-    // const token = getToken();
-    // if (token) {
-    //   response.headers.common["Authorization"] = token;
-    // }
+    const token = getToken();
+    if (token) {
+      response.headers.common["Authorization"] = token;
+    }
     return response;
   },
   (error) => {

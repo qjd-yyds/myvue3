@@ -1,14 +1,14 @@
-import { ref, computed } from 'vue';
-import { easingFn, formatNumber } from './useTool';
+import { ref, computed } from "vue";
+import { easingFn, formatNumber } from "./useTool";
 
 export const useCount = (
   props: any,
   localStartVal: any,
   startTime: any,
   localDuration: any,
-  rAF: any
+  rAF: any,
 ) => {
-  const printVal = ref(null);
+  const printVal = ref<number | null>(null);
   const displayValue = ref(
     formatNumber({
       num: props.startVal,
@@ -16,10 +16,10 @@ export const useCount = (
       decimal: props.decimal,
       separator: props.separator,
       prefix: props.prefix,
-      suffix: props.suffix
-    })
+      suffix: props.suffix,
+    }),
   );
-  const timestamp = ref(null);
+  const timestamp = ref<number | null>(null);
   // 返回是否倒序累加
   const countDown: any = computed((): boolean => {
     return props.startVal > props.endVal;
@@ -33,18 +33,13 @@ export const useCount = (
     if (countDown.value) {
       printVal.value =
         localStartVal.value -
-        easingFn(
-          progress,
-          0,
-          localStartVal.value - props.endVal,
-          localDuration.value
-        );
+        easingFn(progress, 0, localStartVal.value - props.endVal, localDuration.value);
     } else {
       printVal.value = easingFn(
         progress,
         localStartVal.value,
         props.endVal - localStartVal.value,
-        localDuration.value
+        localDuration.value,
       );
     }
     displayValue.value = formatNumber({
@@ -53,15 +48,14 @@ export const useCount = (
       decimal: props.decimal,
       separator: props.separator,
       prefix: props.prefix,
-      suffix: props.suffix
+      suffix: props.suffix,
     });
     if (progress < localDuration.value) {
       rAF.value = requestAnimationFrame(count);
-    } else {
     }
   };
   return {
     count,
-    displayValue
+    displayValue,
   };
 };

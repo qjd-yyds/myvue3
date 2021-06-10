@@ -1,39 +1,33 @@
-<template>
-  <span>
-    {{ displayValue }}
-  </span>
-</template>
-<script lang="ts">
-import { defineComponent, watch, PropType, onMounted } from 'vue';
-import { useStart } from './useStart';
-import { useCount } from './useCount';
+import { defineComponent, watch, onMounted } from "vue";
+import { useStart } from "./useStart";
+import { useCount } from "./useCount";
 
 export default defineComponent({
-  name: 'CountTo',
+  name: "CountTo",
   props: {
     // 开始数字
     startVal: {
       type: Number,
       required: false,
-      default: 0
+      default: 0,
     },
     // 结束数字
     endVal: {
       type: Number,
       required: false,
-      default: 2017
+      default: 2017,
     },
     // 持续时间
     duration: {
       type: Number,
       required: false,
-      default: 5000
+      default: 5000,
     },
     // 自动播放
     autoplay: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     decimals: {
       type: Number,
@@ -42,40 +36,33 @@ export default defineComponent({
       // 验证
       validator(value: number) {
         return value >= 0;
-      }
+      },
     },
     decimal: {
       type: String,
       required: false,
-      default: '.'
+      default: ".",
     },
     // 风格字符
     separator: {
       type: String,
       required: false,
-      default: ','
+      default: ",",
     },
     prefix: {
       type: String,
       required: false,
-      default: ''
+      default: "",
     },
     suffix: {
       type: String,
       required: false,
-      default: ''
-    }
+      default: "",
+    },
   },
   setup(props: any) {
-    const { localStartVal, startTime, localDuration, rAF, start } =
-      useStart(props);
-    const { count, displayValue } = useCount(
-      props,
-      localStartVal,
-      startTime,
-      localDuration,
-      rAF
-    );
+    const { localStartVal, startTime, localDuration, rAF, start } = useStart(props);
+    const { count, displayValue } = useCount(props, localStartVal, startTime, localDuration, rAF);
     // 监听开始数字变化
     watch(
       () => props.startVal,
@@ -83,14 +70,14 @@ export default defineComponent({
         if (props.autoplay) {
           start(count);
         }
-      }
+      },
     );
     // 监听结束数字变化
     watch(
       () => props.endVal,
       () => {
         start(count);
-      }
+      },
     );
     onMounted(() => {
       // 默认自动滚动
@@ -98,9 +85,6 @@ export default defineComponent({
         start(count);
       }
     });
-    return {
-      displayValue
-    };
-  }
+    return () => <span>{displayValue.value}</span>;
+  },
 });
-</script>
