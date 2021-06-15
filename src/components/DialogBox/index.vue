@@ -1,6 +1,6 @@
 <template>
   <transition name="notice-fade">
-    <div class="dialog" v-show="visible">
+    <div class="notice" :id="id" v-show="visible" :style="positionStyle">
       <slot>
         {{ message }}
       </slot>
@@ -9,30 +9,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, ref, VNode } from "vue";
+import { defineComponent, onMounted, PropType, ref, VNode, computed } from "vue";
+import { Position } from "./notice.type";
 
 export default defineComponent({
-  name: "DialogBox",
+  name: "notice",
   props: {
     message: {
       type: [String, Object] as PropType<string | VNode>,
       default: "",
     },
+    offset: { type: Number, default: 0 },
+    zIndex: { type: Number, default: 0 },
+    id: { type: String, default: "" },
+    position: {
+      type: String as PropType<Position>,
+      default: "top-right",
+    },
+    onClose: {
+      type: Function as PropType<() => void>,
+      required: true,
+    },
   },
-  setup() {
+  setup(props) {
     let visible = ref(false);
+    const verticalProperty = computed(() => {
+      return props.position.startsWith("top") ? "top" : "bottom";
+    });
+
+    const positionStyle = computed(() => {
+      return {
+        zIndex: props.zIndex,
+        [verticalProperty.value]: props.offset + "px",
+      };
+    });
     onMounted(() => {
       visible.value = true;
     });
     return {
       visible,
+      positionStyle,
     };
   },
 });
 </script>
 
 <style scoped lang="scss">
-.dialog {
+.notice {
   background-color: rgba(0, 0, 0, 0.5);
   display: inline-block;
   padding: 5px;
