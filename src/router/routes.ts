@@ -12,6 +12,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/Login"),
   },
   {
+    name: "Other",
+    path: "/other",
+    component: () => import("@/views/other"),
+  },
+  {
     name: "Leader",
     path: "/leader",
     component: leaderLayout,
