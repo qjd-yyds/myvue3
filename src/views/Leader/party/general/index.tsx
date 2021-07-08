@@ -1,9 +1,9 @@
 import Tembox from "@/components/Tembox";
-import { defineComponent, ref } from "@vue/runtime-core";
 import { IgeneralList } from "./type";
 import "./style.scss";
 import GeneralItem from "./generalItem";
 import { ApiGroupNum } from "@/api/leader/party";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "General",
@@ -39,11 +39,11 @@ export default defineComponent({
       }
     });
     return () => (
-      <Tembox temTitle="党组织概况" temHeight={246}>
+      <Tembox temTitle="党组织概况" temHeight={246} ref="mybox">
         <div class="general-container">
           <ul class="general-box">
             {generalList.value.map((item) => (
-              <GeneralItem msg={item}></GeneralItem>
+              <GeneralItem msg={item} ref="mybox"></GeneralItem>
             ))}
           </ul>
         </div>
