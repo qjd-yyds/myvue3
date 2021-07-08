@@ -1,4 +1,4 @@
-import { computed } from "@vue/runtime-core";
+import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export function useHandleRouter() {
