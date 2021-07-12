@@ -1,45 +1,32 @@
 import { defineComponent } from "vue";
 import "./style.scss";
 export default defineComponent({
-  name: "Other",
+  name: "Drag",
   directives: {
     drag: {
-      mounted(el: HTMLDivElement, { value }) {
-        console.log(value);
-        // const { callback } = value;
-        // dom当前位子
-        let rectLeft = 0;
-        let rectTop = 0;
-        // 鼠标按下
-        let beginX = 0;
-        let beginY = 0;
-        // 鼠标移动
-        let endX = 0;
-        let endY = 0;
-        let moveX = endY - beginY + rectTop;
-        let moveY = endX - beginX + rectLeft;
-        // 是否移动
-        // let bmove = false;
-        el.onmousedown = (e) => {
-          // bmove = false;
-          rectLeft = el.offsetLeft;
-          rectTop = el.offsetTop;
-          console.log(rectLeft, rectTop, "当前滑块的位置");
-          beginX = e.clientX;
-          beginY = e.clientY;
-          console.log(beginX, beginY, "鼠标开始点");
-          document.onmousemove = (ev) => {
-            // bmove = true;
-            endX = ev.clientX;
-            endY = ev.clientY;
-            moveX = endX - beginX + rectTop;
-            moveY = endY - beginY + rectLeft;
-            el.style.transform = `translate(${moveX}px,${moveY}px)`;
-            // el.style["top"] = moveX + "px";
-            // el.style["left"] = moveY + "px";
+      mounted(el: HTMLDivElement) {
+        el.onmousedown = (ev) => {
+          console.log(ev);
+          // 鼠标按下的位置
+          const mouseXStart = ev.clientX;
+          const mouseYStart = ev.clientY;
+          console.log("按下开始", mouseXStart, mouseYStart);
+          // 当前滑块位置
+          const rectLeft = el.offsetLeft;
+          const rectTop = el.offsetTop;
+          document.onmousemove = (e) => {
+            // 鼠标移动的位置
+            const mouseXEnd = e.clientX;
+            const mouseYEnd = e.clientY;
+            const moveX = mouseXEnd - mouseXStart + rectLeft;
+            const moveY = mouseYEnd - mouseYStart + rectTop;
+            console.log(rectLeft, rectTop);
+            el.style["top"] = moveY + "px";
+            el.style["left"] = moveX + "px";
           };
           document.onmouseup = () => {
-            // callback && callback(bmove);
+            console.log("鼠标抬起");
+            // 取消事件
             document.onmousemove = null;
           };
         };
