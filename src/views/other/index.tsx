@@ -1,8 +1,15 @@
 import { defineComponent } from "vue";
-import "./style.scss";
+import Mycom from "./mycom";
 export default defineComponent({
-  name: "Drag",
-  render() {
-    return <div class="rect" v-drag></div>;
+  name: "Jsx",
+  setup() {
+    function getSon(msg: string) {
+      console.log(msg);
+    }
+    return () => (
+      <div>
+        <Mycom {...{ onEvent: getSon }} />
+      </div>
+    );
   },
 });
