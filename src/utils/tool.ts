@@ -72,6 +72,19 @@ export const throttle: Ithrottle = function (this, fn, delay) {
   };
 };
 
+// 防抖函数
+export const debounce = function (this: any, fn: any, delay = 500): any {
+  let timer: NodeJS.Timeout;
+  const that = this;
+  return function (...args: any[]) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn.apply(that, args);
+    }, delay);
+  };
+};
 // 转换范围经纬度
 export const conversionRange = function (range: string): number[][] {
   return range.split(";").map((e) => [+e.split(",")[0], +e.split(",")[1]]);
@@ -85,9 +98,8 @@ export function cutArray(arr: any[], num: number) {
   }
   return result;
 }
-
+// 正则匹配rgb（0,0,0） 里的数据
 export function regRgb(value: string) {
-  // 正则匹配rgb（0,0,0） 里的数据
   const reg = /rgb\((.*)\)/;
   return value
     .replace(reg, "$1")
@@ -95,4 +107,16 @@ export function regRgb(value: string) {
     .map((item) => {
       return +item;
     });
+}
+
+// compose函数
+export type ComposeArgs = (...args: any) => any;
+export function compose(funs: ComposeArgs[]) {
+  return function (...arg1: any[]) {
+    return funs.reduce((a, b) => {
+      return (...arg2) => {
+        return b(a(...arg2), ...arg1);
+      };
+    });
+  };
 }
