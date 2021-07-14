@@ -4,6 +4,7 @@ import { loadAllPlugins } from "@/plugins";
 import "./styles/index.scss";
 import router from "./router";
 import store from "./store";
+import "@/directives";
 // import { MonitorDom } from "./utils/monitor";
 const app = createApp(App);
 app.use(router);
