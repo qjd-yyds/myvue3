@@ -17,7 +17,7 @@ export const ElToast = (option: IElToast): void => {
 };
 
 // 创建时间戳
-type dateValue = string | number;
+export type dateValue = string | number;
 export function formatDateTime(value: Date, format: string): string {
   const date: Date = new Date(value);
   let text: typeof format = format;
@@ -57,7 +57,7 @@ export function supZero(value: number): dateValue {
 }
 
 // 节流函数
-type Ithrottle = (this: any, fn: any, delay: number) => any;
+export type Ithrottle = (this: any, fn: any, delay: number) => any;
 
 export const throttle: Ithrottle = function (this, fn, delay) {
   const that = this;
@@ -84,10 +84,6 @@ export const debounce = function (this: any, fn: any, delay = 500): any {
       fn.apply(that, args);
     }, delay);
   };
-};
-// 转换范围经纬度
-export const conversionRange = function (range: string): number[][] {
-  return range.split(";").map((e) => [+e.split(",")[0], +e.split(",")[1]]);
 };
 // 将单维数组切割二维数组
 export function cutArray(arr: any[], num: number) {
@@ -118,5 +114,25 @@ export function compose(funs: ComposeArgs[]) {
         return b(a(...arg2), ...arg1);
       };
     });
+  };
+}
+
+export function myinterval(cb: () => any, time: number) {
+  let timer: NodeJS.Timeout;
+  const fn = () => {
+    cb();
+    timer = setTimeout(() => {
+      fn();
+    }, time);
+  };
+  const start = () => {
+    timer = setTimeout(fn, time);
+  };
+  const clear = () => {
+    timer && clearTimeout(timer);
+  };
+  return {
+    start,
+    clear,
   };
 }
